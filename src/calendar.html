@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendar App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body>
+    <div class="calendar wrapper container-fluid">
+        <div class="row py-3">
+            <div class="col-12 col-md">
+                <h2 class="heading mb-3 mb-md-0">Calendar</h2>
+            </div>
+            <div class="col-12 col-md">
+                <div class="d-flex justify-content-md-end">
+                    <select class="members-select form-select me-3">
+                        <option class="members-select__option" value="All members" selected>All members</option>
+                        <option class="members-select__option" value="Maria">Maria</option>
+                        <option class="members-select__option" value="Kate">Kate</option>
+                        <option class="members-select__option" value="Alex">Alex</option>
+                        <option class="members-select__option" value="Bob">Bob</option>
+                    </select>
+                    <a class="new-event-button btn btn-light btn-outline-secondary" href="./create-event.html" role="button">New event +</a>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive-md">
+            <table class="calendar-table table table-bordered">
+                <thead class="calendar-table__header">
+                <tr class="calendar-table__row">
+                    <th class="calendar-table__cell calendar-table__cell--heading">Name</th>
+                    <th class="calendar-table__cell calendar-table__cell--heading">Mon</th>
+                    <th class="calendar-table__cell calendar-table__cell--heading">Tue</th>
+                    <th class="calendar-table__cell calendar-table__cell--heading">Wed</th>
+                    <th class="calendar-table__cell calendar-table__cell--heading">Thu</th>
+                    <th class="calendar-table__cell calendar-table__cell--heading">Fri</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="calendar-table__row" data-time="10.00">
+                    <th class="calendar-table__cell calendar-table__cell--heading">10.00</th>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                </tr>
+                <tr class="calendar-table__row" data-time="11.00">
+                    <th class="calendar-table__cell calendar-table__cell--heading">11.00</th>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                </tr>
+                <tr class="calendar-table__row" data-time="12.00">
+                    <th class="calendar-table__cell calendar-table__cell--heading">12.00</th>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                </tr>
+                <tr class="calendar-table__row" data-time="13.00">
+                    <th class="calendar-table__cell calendar-table__cell--heading">13.00</th>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                </tr>
+                <tr class="calendar-table__row" data-time="14.00">
+                    <th class="calendar-table__cell calendar-table__cell--heading">14.00</th>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                </tr>
+                <tr class="calendar-table__row" data-time="15.00">
+                    <th class="calendar-table__cell calendar-table__cell--heading">15.00</th>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                </tr>
+                <tr class="calendar-table__row" data-time="16.00">
+                    <th class="calendar-table__cell calendar-table__cell--heading">16.00</th>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                </tr>
+                <tr class="calendar-table__row" data-time="17.00">
+                    <th class="calendar-table__cell calendar-table__cell--heading">17.00</th>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                </tr>
+                <tr class="calendar-table__row" data-time="18.00">
+                    <th class="calendar-table__cell calendar-table__cell--heading">18.00</th>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                    <td class="calendar-table__cell"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="delete-modal modal" id="deleteModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="delete-modal__text"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="delete-modal__reject-button btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>
+                    <button class="delete-modal__confirm-button btn btn-primary" type="button" data-bs-dismiss="modal">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create event</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<script defer src="createEvent.bundle.js"></script></head>
+<body>
+    <div class="create-event-form container py-5 px-3">
+        <div class="alert alert--time alert-danger alert-dismissible mb-5 d-none" role="alert">
+            <i class="alert__cross-icon alert__cross-icon bi bi-x-circle-fill me-2"></i>
+            Failed to create an event. Time slot is already booked.
+            <button class="alert__hide-button btn-close" type="button" aria-label="Close"></button>
+        </div>
+        <div class="alert alert--name alert-danger alert-dismissible mb-5 d-none" role="alert">
+            <i class="alert__cross-icon bi bi-x-circle-fill me-2"></i>
+            Failed to create an event. Name slot is empty.
+            <button class="alert__hide-button btn-close" type="button" aria-label="Close"></button>
+        </div>
+        <form>
+            <div class="row mb-3">
+                <label for="inputName" class="col-sm-3 col-form-label">Name of the event:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="inputName">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="selectParticipants" class="col-sm-3 col-form-label">Participants:</label>
+                <div class="col-sm-5">
+                    <select class="form-select" id="selectParticipants" multiple>
+                        <option selected value="Maria">Maria</option>
+                        <option value="Kate">Kate</option>
+                        <option value="Alex">Alex</option>
+                        <option value="Bob">Bob</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="selectDay" class="col-sm-3 col-form-label">Day:</label>
+                <div class="col-sm-5">
+                    <select class="form-select" id="selectDay">
+                        <option selected value="Mon">Mon</option>
+                        <option value="Tue">Tue</option>
+                        <option value="Wed">Wed</option>
+                        <option value="Mon">Mon</option>
+                        <option value="Fri">Fri</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <label for="selectTime" class="col-sm-3 col-form-label">Time:</label>
+                <div class="col-sm-5">
+                    <select class="form-select" id="selectTime">
+                        <option selected value="10.00">10.00</option>
+                        <option value="11.00">11.00</option>
+                        <option value="12.00">12.00</option>
+                        <option value="13.00">13.00</option>
+                        <option value="14.00">14.00</option>
+                        <option value="15.00">15.00</option>
+                        <option value="16.00">16.00</option>
+                        <option value="17.00">17.00</option>
+                        <option value="18.00">18.00</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row justify-content-sm-end px-2">
+                <a class="button button--cancel btn btn-light btn-outline-secondary me-2 col col-sm-2"
+                   href="./calendar.html"
+                   role="button"
+                >
+                    Cancel
+                </a>
+                <a class="button button--create btn btn-light btn-outline-secondary col col-sm-2"
+                   role="button"
+                   href="./calendar.html"
+                >
+                    Create
+                </a>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>

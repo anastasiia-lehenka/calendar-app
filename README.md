@@ -1,8 +1,8 @@
-### **Calendar**
+## **Calendar**
 
 This is a simple meeting planning calendar for a meeting room in your office.
 
-##### **How to run the app**
+### **How to run the app**
 
 Run **npm install** in your terminal.
 

@@ -6,21 +6,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 </head>
 <body>
-    <div class="calendar wrapper container-fluid">
-        <div class="row py-3">
+    <div class="calendar wrapper container-fluid pt-3">
+        <div class="row mb-3">
+            <div class="auth-info d-flex justify-content-md-end align-items-center">
+                <p class="auth-info__text m-0 me-3"></p>
+                <button class="auth-info__btn logout-btn btn btn-danger btn-sm d-none" type="submit">Logout</button>
+            </div>
+        </div>
+        <div class="row mb-4">
             <div class="col-12 col-md">
                 <h2 class="heading mb-3 mb-md-0">Calendar</h2>
             </div>
             <div class="col-12 col-md">
                 <div class="d-flex justify-content-md-end">
-                    <select class="members-select form-select me-3">
+                    <select class="members-select form-select">
                         <option class="members-select__option" value="All members" selected>All members</option>
                         <option class="members-select__option" value="Maria">Maria</option>
                         <option class="members-select__option" value="Kate">Kate</option>
                         <option class="members-select__option" value="Alex">Alex</option>
                         <option class="members-select__option" value="Bob">Bob</option>
                     </select>
-                    <a class="new-event-button btn btn-light btn-outline-secondary" href="./create-event.html" role="button">New event +</a>
+                    <a class="new-event-button btn btn-light btn-outline-secondary ms-3" href="./create-event.html" role="button">New event +</a>
                 </div>
             </div>
         </div>
@@ -124,8 +130,29 @@
                     <p class="delete-modal__text"></p>
                 </div>
                 <div class="modal-footer">
-                    <button class="delete-modal__reject-button btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>
-                    <button class="delete-modal__confirm-button btn btn-primary" type="button" data-bs-dismiss="modal">Yes</button>
+                    <button class="delete-modal__reject-button btn btn-secondary" type="button" data-bs-dismiss="deleteModal">No</button>
+                    <button class="delete-modal__confirm-button btn btn-primary" type="button" data-bs-dismiss="deleteModal">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="auth-modal modal fade" id="authModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Authorization</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="auth-modal__text">Please authorise</p>
+                    <select class="auth-modal-select form-select me-3">
+                        <option class="auth-modal-select__option" value="Maria">Maria</option>
+                        <option class="auth-modal-select__option" value="Kate">Kate</option>
+                        <option class="auth-modal-select__option" value="Alex">Alex</option>
+                        <option class="auth-modal-select__option" value="Bob">Bob</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button class="auth-modal__confirm-button btn btn-primary" type="button">Confirm</button>
                 </div>
             </div>
         </div>

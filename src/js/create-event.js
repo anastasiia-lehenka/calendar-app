@@ -1,23 +1,19 @@
 import { v4 } from 'uuid';
 import { getEventsData, setEventsData } from './helpers';
+import { ALERTS } from './constants';
 import '../scss/create-event.scss';
 
 const createEventButton = document.querySelector('.button--create');
-const hideNameAlertButton = document.querySelector('.alert--name .alert__hide-button');
-const hideTimeAlertButton = document.querySelector('.alert--time .alert__hide-button');
-const timeAlert = document.querySelector('.alert--time');
-const nameAlert = document.querySelector('.alert--name');
+const hideAlertButton = document.querySelector('.alert__hide-button');
+const alert = document.querySelector('.alert');
 
-let timer;
-
-const showAlert = (alert) => {
-    clearTimeout(timer);
+const showAlert = (text) => {
+    const alertTextContainer = document.querySelector('.alert__text');
     alert.classList.remove('d-none');
-    timer = setTimeout(() => alert.classList.add('d-none'), 4000);
+    alertTextContainer.innerText = text;
 };
 
-const hideAlert = (alert) => {
-    clearTimeout(timer);
+const hideAlert = () => {
     alert.classList.add('d-none');
 };
 
@@ -47,14 +43,13 @@ const addEvent = (e) => {
             setEventsData(userEvents);
         } else {
             e.preventDefault();
-            showAlert(timeAlert);
+            showAlert(ALERTS.time);
         }
     } else {
         e.preventDefault();
-        showAlert(nameAlert);
+        showAlert(ALERTS.name);
     }
 };
 
 createEventButton.addEventListener('click', addEvent);
-hideTimeAlertButton.addEventListener('click', () => hideAlert(timeAlert));
-hideNameAlertButton.addEventListener('click', () => hideAlert(nameAlert));
+hideAlertButton.addEventListener('click', hideAlert);

@@ -36,7 +36,10 @@ const renderAuthData = () => {
     } else {
         authText.innerHTML = '';
         logoutBtn.classList.add('d-none');
+        newEventBtn.classList.add('d-none');
     }
+
+    membersSelect.value = 'All members';
 };
 
 const onLoad = () => {
@@ -116,7 +119,7 @@ const renderEvents = (userEvents) => {
             }
 
             eventCell.classList.add('calendar-table__cell--event');
-            eventCell.setAttribute('data-id', userEvent.id);
+            eventContainer.setAttribute('data-id', userEvent.id);
             eventCell.appendChild(eventContainer);
         });
     }
@@ -136,19 +139,19 @@ const configureDeleteModal = (e) => {
 
 const deleteEvent = (eventId) => {
     const events = getEventsData();
-    const deletedEvent = events.find(item => item.id === eventId);
-
-    events.splice(events.indexOf(deletedEvent), 1);
-    setEventsData(events);
-    renderEvents();
+    const clearedEvents = events.filter(item => item.id !== eventId);
+    setEventsData(clearedEvents);
+    filterEvents();
 };
 
-const filterEvents = (e) => {
+const filterEvents = () => {
     let events = getEventsData();
+    const participant = membersSelect.value;
 
-    if (e.target.value !== 'All members') {
-        events = events.filter((event) => event.participants.includes(e.target.value));
+    if (participant !== 'All members' && events) {
+        events = events.filter((event) => event.participants.includes(participant));
     }
+
     renderEvents(events);
 };
 

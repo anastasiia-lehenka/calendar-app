@@ -8,14 +8,9 @@
 </head>
 <body>
     <div class="create-event-form container py-5 px-3">
-        <div class="alert alert--time alert-danger alert-dismissible mb-5 d-none" role="alert">
+        <div class="alert alert-danger alert-dismissible mb-5 d-none" role="alert">
             <i class="alert__cross-icon alert__cross-icon bi bi-x-circle-fill me-2"></i>
-            Failed to create an event. Time slot is already booked.
-            <button class="alert__hide-button btn-close" type="button" aria-label="Close"></button>
-        </div>
-        <div class="alert alert--name alert-danger alert-dismissible mb-5 d-none" role="alert">
-            <i class="alert__cross-icon bi bi-x-circle-fill me-2"></i>
-            Failed to create an event. Name slot is empty.
+            <span class="alert__text"></span>
             <button class="alert__hide-button btn-close" type="button" aria-label="Close"></button>
         </div>
         <form>
@@ -43,7 +38,7 @@
                         <option selected value="Mon">Mon</option>
                         <option value="Tue">Tue</option>
                         <option value="Wed">Wed</option>
-                        <option value="Mon">Mon</option>
+                        <option value="Thu">Thu</option>
                         <option value="Fri">Fri</option>
                     </select>
                 </div>

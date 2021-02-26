@@ -11,3 +11,7 @@ export const USERS = [
 ];
 export const EVENTS_STORAGE_KEY = 'events';
 export const USER_STORAGE_KEY = 'user';
+export const ALERTS = {
+    time: 'Failed to create an event. Time slot is already booked.',
+    name: 'Failed to create an event. Name slot is empty.'
+};

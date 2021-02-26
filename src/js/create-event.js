@@ -1,33 +1,28 @@
 import { v4 } from 'uuid';
-import { getStorageData } from './helpers';
+import { getEventsData, setEventsData } from './helpers';
+import { ALERTS } from './constants';
 import '../scss/create-event.scss';
 
-// Selectors
 const createEventButton = document.querySelector('.button--create');
-const nameInput = document.getElementById('inputName');
-const participantsSelect = document.getElementById('selectParticipants');
-const daySelect = document.getElementById('selectDay');
-const timeSelect = document.getElementById('selectTime');
-const nameAlert = document.querySelector('.alert--name');
-const timeAlert = document.querySelector('.alert--time');
-const hideNameAlertButton = document.querySelector('.alert--name .alert__hide-button');
-const hideTimeAlertButton = document.querySelector('.alert--time .alert__hide-button');
+const hideAlertButton = document.querySelector('.alert__hide-button');
+const alert = document.querySelector('.alert');
 
-let timer;
-
-const showAlert = (alert) => {
-    clearTimeout(timer);
+const showAlert = (text) => {
+    const alertTextContainer = document.querySelector('.alert__text');
     alert.classList.remove('d-none');
-    timer = setTimeout(() => alert.classList.add('d-none'), 4000);
+    alertTextContainer.innerText = text;
 };
 
-const hideAlert = (alert) => {
-    clearTimeout(timer);
+const hideAlert = () => {
     alert.classList.add('d-none');
 };
 
 const addEvent = (e) => {
-    const userEvents = getStorageData() || [];
+    const userEvents = getEventsData() || [];
+    const nameInput = document.getElementById('inputName');
+    const participantsSelect = document.getElementById('selectParticipants');
+    const daySelect = document.getElementById('selectDay');
+    const timeSelect = document.getElementById('selectTime');
 
     if (nameInput.value) {
         const id = v4();
@@ -35,7 +30,6 @@ const addEvent = (e) => {
         const participants = [...participantsSelect.options].filter(option => option.selected).map(option => option.value);
         const day = daySelect.value;
         const time = timeSelect.value;
-
         const existingEvent = userEvents.find((userEvent) => userEvent.day === day && userEvent.time === time);
 
         if (!existingEvent) {
@@ -46,18 +40,16 @@ const addEvent = (e) => {
                 day,
                 time,
             });
-            localStorage.setItem('userEvents', JSON.stringify(userEvents));
+            setEventsData(userEvents);
         } else {
             e.preventDefault();
-            showAlert(timeAlert);
+            showAlert(ALERTS.time);
         }
     } else {
         e.preventDefault();
-        showAlert(nameAlert);
+        showAlert(ALERTS.name);
     }
 };
 
-//Add EventListeners
 createEventButton.addEventListener('click', addEvent);
-hideTimeAlertButton.addEventListener('click', () => hideAlert(timeAlert));
-hideNameAlertButton.addEventListener('click', () => hideAlert(nameAlert));
+hideAlertButton.addEventListener('click', hideAlert);

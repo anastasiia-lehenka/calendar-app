@@ -1,30 +1,35 @@
-import {
-    EVENTS_STORAGE_KEY,
-    USER_STORAGE_KEY,
-    USERS
-} from './constants';
+import * as bootstrap from 'bootstrap';
 
-export const getEventsData = () => {
-    return JSON.parse(localStorage.getItem(EVENTS_STORAGE_KEY));
+export const fillSelect = (usersList, selectElement) => {
+    usersList.map((user) => {
+        const option = document.createElement('option');
+        option.innerText = user.name;
+        option.setAttribute('value', user.name);
+        selectElement.appendChild(option);
+    });
 };
 
-export const setEventsData = (events) => {
-    if (events.length) {
-        localStorage.setItem(EVENTS_STORAGE_KEY, JSON.stringify(events));
-    } else {
-        localStorage.removeItem(EVENTS_STORAGE_KEY);
-    }
-};
+export const showToast = (type, text) => {
+    const toastContainer = document.querySelector('.toast-container');
+    const toast = document.createElement('div');
+    toast.classList.add('toast');
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
+    toast.innerHTML =
+        `<div class="toast-header">
+            <i class="bi me-2 ${type === 'success' ? 'bi-check-circle-fill text-success' : type === 'error' ? 'bi-x-circle-fill text-danger' : ''}">
+            </i>
+            <strong class="me-auto">${type.toUpperCase()}</strong>
+         </div>
+         <div class="toast-body">${text}</div> `;
+    toastContainer.appendChild(toast);
 
-export const getUserData = () => {
-    return JSON.parse(sessionStorage.getItem(USER_STORAGE_KEY));
-};
+    const toastEl =  new bootstrap.Toast(toast, {
+        animation: true,
+        autohide: true,
+        delay: 2000,
+    });
 
-export const setUserData = (username) => {
-    const currentUser = USERS.find((user) => user.name === username);
-    sessionStorage.setItem(USER_STORAGE_KEY, JSON.stringify(currentUser));
-};
-
-export const deleteUserData = () => {
-    sessionStorage.removeItem(USER_STORAGE_KEY);
+    toastEl.show();
 };

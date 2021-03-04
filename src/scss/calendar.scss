@@ -13,7 +13,8 @@ a {
     width: 200px;
 }
 
-.calendar-table__cell--event {
+.calendar-table__cell--event,
+.green {
     background-color: $event !important;
 }
 

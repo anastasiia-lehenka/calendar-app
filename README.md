@@ -12,7 +12,7 @@ Or you can access it on GitHub Pages using next link: https://anastasiia-lehenka
 
 ###### Note
 
-Note that first time you open the app your calendar will be empty as there are no events in the Local Storage yet. You need to manually create your first event using _New Event_ button on top of the page.
+You can create event with multiple participants by clicking Ctrl when selecting participants.
 
 ###### Task 1
 

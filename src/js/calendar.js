@@ -1,12 +1,8 @@
 import * as bootstrap from 'bootstrap';
 import { DAYS, TIMESLOTS } from './constants';
-import {
-    getEventsData,
-    setEventsData,
-    getUserData,
-    setUserData,
-    deleteUserData,
-} from './helpers';
+import { getUserData, setUserData, deleteUserData } from './sessionStorageApi';
+import { getUsers, getEvents, deleteEvent } from './dataFacade';
+import { fillSelect } from './helpers';
 import '../scss/calendar.scss';
 
 const table = document.querySelector('.calendar-table');
@@ -15,20 +11,70 @@ const authModal = new bootstrap.Modal(document.querySelector('.auth-modal'), {
     backdrop: 'static',
     keyboard: false,
 });
-const authModalConfirmButton = document.querySelector('.auth-modal__confirm-button');
+const authModalConfirmBtn = document.querySelector('.auth-modal__confirm-button');
 const logoutBtn = document.querySelector('.logout-btn');
+const authSelect = document.querySelector('.auth-modal-select');
 
+let events;
+let activeUser;
+let allUsers;
 
-const renderAuthData = () => {
-    const currentUser = getUserData();
+const onLoad = async() => {
+    if (!allUsers) {
+        allUsers = await getUsers();
+        await renderUsers(allUsers);
+    }
+
+    if (!activeUser) {
+        activeUser = getUserData();
+    }
+
+    if (!activeUser) {
+        authModal.show();
+    } else {
+        await renderPageContent(activeUser);
+    }
+
+};
+
+const renderPageContent = async(currentUser) => {
+    if (!events) {
+        events = await getEvents();
+    }
+
+    renderEvents(events);
+    renderAuthData(currentUser);
+};
+
+const renderEvents = (userEvents) => {
+    clearTable(table);
+
+    if (userEvents) {
+        userEvents.map((userEvent) => {
+            const eventCell = table.rows[TIMESLOTS.indexOf(userEvent.time) + 1].cells[DAYS.indexOf(userEvent.day) + 1];
+
+            eventCell.innerHTML =
+                `<div class="event" data-id="${userEvent.id}">
+                    <span class="event__name">${userEvent.name}</span>
+                    ${ activeUser.canModifyEvents ?
+                    '<button class="event__delete-button btn-close btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"></button>' :
+                    ''}
+                </div>`;
+
+            eventCell.classList.add('calendar-table__cell--event');
+        });
+    }
+};
+
+const renderAuthData = (currentUser) => {
     const authText = document.querySelector('.auth-info__text');
     const newEventBtn = document.querySelector('.new-event-button');
 
-    if (currentUser) {
+    if (activeUser) {
         authText.innerHTML = `You are logged in as <strong>${currentUser.name}</strong>`;
         logoutBtn.classList.remove('d-none');
 
-        if (!currentUser.canModifyEvents) {
+        if (!activeUser.canModifyEvents) {
             newEventBtn.classList.add('d-none');
         } else {
             newEventBtn.classList.remove('d-none');
@@ -38,36 +84,40 @@ const renderAuthData = () => {
         logoutBtn.classList.add('d-none');
         newEventBtn.classList.add('d-none');
     }
-
-    membersSelect.value = 'All members';
 };
 
-const onLoad = () => {
-    const currentUser = getUserData();
-
-    renderAuthData();
-    renderEvents();
-
-    if (!currentUser) {
-        authModal.show();
+const renderUsers = (users) => {
+    if (users) {
+        fillSelect(users, authSelect);
+        fillSelect(users, membersSelect);
     }
 };
 
-const onAuthConfirm = () => {
-    const usersSelect = document.querySelector('.auth-modal-select');
-    const currentUsername = usersSelect.value;
+const onAuthConfirm = async() => {
+    const selectedUsername = authSelect.value;
 
-    authModal.hide();
-    setUserData(currentUsername);
-    onLoad();
+    if (selectedUsername) {
+        authModal.hide();
+        activeUser = allUsers.find((user) => user.name === selectedUsername);
+        setUserData(activeUser);
+        await renderPageContent(activeUser);
+    }
 };
 
-const logOut = () => {
+const clearPageContent = () => {
+    renderEvents();
+    renderAuthData();
+    membersSelect.value = 'All members';
+};
+
+const logOut = async() => {
+    activeUser = null;
     deleteUserData();
-    onLoad();
+    clearPageContent();
+    await onLoad();
 };
 
-const clearTable = () => {
+const clearTable = (table) => {
     const tableCells = table.getElementsByTagName('td');
 
     Array.from(tableCells).map((cell) => {
@@ -84,79 +134,39 @@ const clearTableCell = (cell) => {
     }
 };
 
-const renderEvents = (userEvents) => {
-    clearTable();
-
-    const currentUser = getUserData();
-    if (!currentUser) return;
-
-    if (!userEvents) {
-        userEvents = getEventsData();
-    }
-
-    if (userEvents) {
-        userEvents.map((userEvent) => {
-            const eventCell =
-                table.rows[TIMESLOTS.indexOf(userEvent.time) + 1].cells[DAYS.indexOf(userEvent.day) + 1];
-            clearTableCell(eventCell);
-
-            const eventContainer = document.createElement('div');
-            eventContainer.classList.add('event');
-
-            const eventName = document.createElement('span');
-            eventName.classList.add('event__name');
-            eventName.innerText = userEvent.name;
-            eventContainer.appendChild(eventName);
-
-            if (currentUser.canModifyEvents) {
-                const deleteButton = document.createElement('button');
-                deleteButton.classList.add('event__delete-button');
-                deleteButton.classList.add('btn-close');
-                deleteButton.classList.add('btn-sm');
-                deleteButton.setAttribute('data-bs-toggle', 'modal');
-                deleteButton.setAttribute('data-bs-target', '#deleteModal');
-                eventContainer.appendChild(deleteButton);
-            }
-
-            eventCell.classList.add('calendar-table__cell--event');
-            eventContainer.setAttribute('data-id', userEvent.id);
-            eventCell.appendChild(eventContainer);
-        });
-    }
-};
-
 const configureDeleteModal = (e) => {
     if (e.target.classList.contains('event__delete-button')) {
         const deleteModalText = document.querySelector('.delete-modal__text');
-        const deleteModalConfirmButton = document.querySelector('.delete-modal__confirm-button');
-        const eventCell = e.target.parentElement;
-        const eventName = eventCell.children[0].innerText;
+        const deleteModalConfirmBtn = document.querySelector('.delete-modal__confirm-button');
+        const eventElement = e.target.parentElement;
+        const eventName = eventElement.children[0].innerText;
 
         deleteModalText.innerText = `Are you sure you want to delete "${eventName}" event?`;
-        deleteModalConfirmButton.addEventListener('click', deleteEvent.bind(this, eventCell.dataset.id));
+        deleteModalConfirmBtn.addEventListener('click', removeEvent.bind(this, eventElement));
     }
 };
 
-const deleteEvent = (eventId) => {
-    const events = getEventsData();
-    const clearedEvents = events.filter(item => item.id !== eventId);
-    setEventsData(clearedEvents);
-    filterEvents();
+const removeEvent = async(eventElement) => {
+    const eventId = eventElement.dataset.id;
+    await deleteEvent(eventId);
+
+    const eventCell = eventElement.parentElement;
+    clearTableCell(eventCell);
+
+    events = events.filter((event) => event.id !== eventId);
 };
 
 const filterEvents = () => {
-    let events = getEventsData();
     const participant = membersSelect.value;
+    const filteredEvents = (participant !== 'All members') ?
+        events.filter((event) => event.participants.includes(participant)) :
+        events;
 
-    if (participant !== 'All members' && events) {
-        events = events.filter((event) => event.participants.includes(participant));
-    }
-
-    renderEvents(events);
+    renderEvents(filteredEvents);
 };
 
 document.addEventListener('DOMContentLoaded', onLoad);
 table.addEventListener('click', configureDeleteModal);
 membersSelect.addEventListener('change', filterEvents);
-authModalConfirmButton.addEventListener('click', onAuthConfirm);
+authModalConfirmBtn.addEventListener('click', onAuthConfirm);
 logoutBtn.addEventListener('click', logOut);

@@ -6,7 +6,7 @@ module.exports = {
     mode: 'development',
     entry: {
         calendar: './src/js/calendar.js',
-        createEvent: './src/js/create-event.js'
+        createEvent: './src/js/createEvent.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

@@ -5,6 +5,4 @@ export const ALERTS = {
     name: 'Failed to create an event. Name slot is empty.'
 };
 export const USER_STORAGE_KEY = 'user';
-const URL = 'http://158.101.166.74:8080/api/data/anastasiia_lehenka';
-export const EVENTS_API_URL = `${URL}/events`;
-export const USERS_API_URL = `${URL}/users`;
+export const SERVER_URL = 'http://158.101.166.74:8080/api/data/anastasiia_lehenka';

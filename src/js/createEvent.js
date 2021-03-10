@@ -1,5 +1,5 @@
 import { ALERTS } from './constants';
-import { getUsers, createEvent, getEvents } from './dataFacade';
+import service from './NotificationsDecorator';
 import { fillSelect } from './helpers';
 import '../scss/create-event.scss';
 
@@ -12,12 +12,12 @@ let allUsers;
 
 const onLoad = async() => {
     if (!allUsers) {
-        allUsers = await getUsers();
+        allUsers = await service.getUsers();
         await renderUsers(allUsers);
     }
 
     if (!events) {
-        events = await getEvents();
+        events = await service.getEvents();
     }
 };
 
@@ -56,7 +56,8 @@ const addEvent = async(e) => {
         const existingEvent = events && events.find((userEvent) => userEvent.day === day && userEvent.time === time);
 
         if (!existingEvent) {
-            const event = await createEvent({
+            createEventButton.disabled = true;
+            const event = await service.createEvent({
                 name,
                 participants,
                 day,
@@ -64,6 +65,8 @@ const addEvent = async(e) => {
             });
             if (event) {
                 setTimeout(() => location.href = './calendar.html', 2000);
+            } else {
+                createEventButton.disabled = false;
             }
         } else {
             showAlert(ALERTS.time);

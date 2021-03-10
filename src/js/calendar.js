@@ -1,8 +1,8 @@
 import * as bootstrap from 'bootstrap';
 import { DAYS, TIMESLOTS } from './constants';
 import { getUserData, setUserData, deleteUserData } from './sessionStorageApi';
-import { getUsers, getEvents, deleteEvent } from './dataFacade';
 import { fillSelect } from './helpers';
+import service from './NotificationsDecorator';
 import '../scss/calendar.scss';
 
 const table = document.querySelector('.calendar-table');
@@ -21,7 +21,7 @@ let allUsers;
 
 const onLoad = async() => {
     if (!allUsers) {
-        allUsers = await getUsers();
+        allUsers = await service.getUsers();
         await renderUsers(allUsers);
     }
 
@@ -39,7 +39,7 @@ const onLoad = async() => {
 
 const renderPageContent = async(currentUser) => {
     if (!events) {
-        events = await getEvents();
+        events = await service.getEvents();
     }
 
     renderEvents(events);
@@ -148,7 +148,7 @@ const configureDeleteModal = (e) => {
 
 const removeEvent = async(eventElement) => {
     const eventId = eventElement.dataset.id;
-    await deleteEvent(eventId);
+    await service.deleteEvent(eventId);
 
     const eventCell = eventElement.parentElement;
     clearTableCell(eventCell);

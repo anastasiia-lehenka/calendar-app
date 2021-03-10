@@ -18,4 +18,6 @@ You can create event with multiple participants by clicking Ctrl when selecting 
 
 Authorization is implemented using Session Storage. So to logout you need to close the tab with application in your browser or press _Logout_ button in the top right corner of the page.
 
+###### Task 3
 
+Singleton pattern is used for interaction with backend (Service class). Factory Method is used for creating instances of User and Admin classes (UserFactory class). Decorator pattern is used for instance of Server class to show notifications which indicate the status of the server request (error/success) (NotificationsDecorator class). 

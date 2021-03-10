@@ -1,9 +1,10 @@
-import { ALERTS } from './constants';
-import service from './NotificationsDecorator';
-import { fillSelect } from './helpers';
-import '../scss/create-event.scss';
+import { ALERTS } from '../constants';
+import service from '../modules/NotificationsDecorator';
+import { fillSelect } from '../helpers';
+import '../../scss/create-event.scss';
 
 const createEventButton = document.querySelector('.button--create');
+const cancelButton = document.querySelector('.button--cancel');
 const hideAlertButton = document.querySelector('.alert__hide-button');
 const alert = document.querySelector('.alert');
 
@@ -57,6 +58,7 @@ const addEvent = async(e) => {
 
         if (!existingEvent) {
             createEventButton.disabled = true;
+            cancelButton.classList.add('disabled');
             const event = await service.createEvent({
                 name,
                 participants,
@@ -67,6 +69,7 @@ const addEvent = async(e) => {
                 setTimeout(() => location.href = './calendar.html', 2000);
             } else {
                 createEventButton.disabled = false;
+                cancelButton.classList.remove('disabled');
             }
         } else {
             showAlert(ALERTS.time);

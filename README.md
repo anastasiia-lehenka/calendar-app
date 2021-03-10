@@ -12,7 +12,8 @@ Or you can access it on GitHub Pages using next link: https://anastasiia-lehenka
 
 ###### Note
 
-You can create event with multiple participants by clicking Ctrl when selecting participants.
+1. To make the app work correctly on Github pages you need to allow insecure content in the site settings in your browser (by default it blocks requests to http://).
+2. You can create event with multiple participants by clicking Ctrl when selecting participants.
 
 ###### Task 1
 

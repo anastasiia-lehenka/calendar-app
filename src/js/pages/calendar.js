@@ -1,9 +1,9 @@
 import * as bootstrap from 'bootstrap';
-import { DAYS, TIMESLOTS } from './constants';
-import { getUserData, setUserData, deleteUserData } from './sessionStorageApi';
-import { fillSelect } from './helpers';
-import service from './NotificationsDecorator';
-import '../scss/calendar.scss';
+import { DAYS, TIMESLOTS } from '../constants';
+import { getUserData, setUserData, deleteUserData } from '../sessionStorageApi';
+import { fillSelect } from '../helpers';
+import service from '../modules/NotificationsDecorator';
+import '../../scss/calendar.scss';
 
 const table = document.querySelector('.calendar-table');
 const membersSelect = document.querySelector('.members-select');
@@ -14,10 +14,13 @@ const authModal = new bootstrap.Modal(document.querySelector('.auth-modal'), {
 const authModalConfirmBtn = document.querySelector('.auth-modal__confirm-button');
 const logoutBtn = document.querySelector('.logout-btn');
 const authSelect = document.querySelector('.auth-modal-select');
+const deleteModal = document.querySelector('.delete-modal');
+
 
 let events;
 let activeUser;
 let allUsers;
+let eventToRemove;
 
 const onLoad = async() => {
     if (!allUsers) {
@@ -137,12 +140,10 @@ const clearTableCell = (cell) => {
 const configureDeleteModal = (e) => {
     if (e.target.classList.contains('event__delete-button')) {
         const deleteModalText = document.querySelector('.delete-modal__text');
-        const deleteModalConfirmBtn = document.querySelector('.delete-modal__confirm-button');
-        const eventElement = e.target.parentElement;
-        const eventName = eventElement.children[0].innerText;
+        eventToRemove = e.target.parentElement;
+        const eventName = eventToRemove.children[0].innerText;
 
         deleteModalText.innerText = `Are you sure you want to delete "${eventName}" event?`;
-        deleteModalConfirmBtn.addEventListener('click', removeEvent.bind(this, eventElement));
     }
 };
 
@@ -165,8 +166,17 @@ const filterEvents = () => {
     renderEvents(filteredEvents);
 };
 
+const onDeleteEvent = async(e) => {
+    const deleteModalConfirmBtn = document.querySelector('.delete-modal__confirm-button');
+
+    if (e.target === deleteModalConfirmBtn) {
+        await removeEvent(eventToRemove);
+    }
+};
+
 document.addEventListener('DOMContentLoaded', onLoad);
 table.addEventListener('click', configureDeleteModal);
 membersSelect.addEventListener('change', filterEvents);
 authModalConfirmBtn.addEventListener('click', onAuthConfirm);
 logoutBtn.addEventListener('click', logOut);
+deleteModal.addEventListener('click', onDeleteEvent);

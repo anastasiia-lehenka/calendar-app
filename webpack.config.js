@@ -5,8 +5,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
     mode: 'development',
     entry: {
-        calendar: './src/js/calendar.js',
-        createEvent: './src/js/createEvent.js'
+        calendar: './src/js/pages/calendar.js',
+        createEvent: './src/js/pages/createEvent.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),

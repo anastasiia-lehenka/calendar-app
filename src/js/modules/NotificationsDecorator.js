@@ -1,60 +1,60 @@
 import { showToast } from '../helpers';
-import { userFactory } from './UserFactory';
+import userFactory from './UserFactory';
 import service from './Service';
 
 export class NotificationsDecorator {
-    constructor(service) {
-        this.service = service;
+  constructor(serviceInstance) {
+    this.service = serviceInstance;
+  }
+
+  async getUsers() {
+    let users;
+
+    try {
+      const usersData = await this.service.getUsers();
+      users = usersData.map((user) => userFactory.create(user));
+      showToast('success', 'Users loaded');
+    } catch (err) {
+      showToast('error', `Failed loading users. ${err}`);
     }
 
-    async getUsers() {
-        let users;
+    return users;
+  }
 
-        try {
-            const usersData = await this.service.getUsers();
-            users =  usersData.map(user => userFactory.create(user));
-            showToast('success', 'Users loaded');
-        } catch (err) {
-            showToast('error', `Failed loading users. ${err}`);
-        }
+  async getEvents() {
+    let events;
 
-        return users;
-    };
+    try {
+      events = await this.service.getEvents();
+      showToast('success', 'Events loaded');
+    } catch (err) {
+      showToast('error', `Failed loading events. ${err}`);
+    }
 
-    async getEvents() {
-        let events;
+    return events;
+  }
 
-        try {
-            events = await this.service.getEvents();
-            showToast('success', 'Events loaded');
-        } catch (err) {
-            showToast('error', `Failed loading events. ${err}`);
-        }
+  async deleteEvent(eventId) {
+    try {
+      await this.service.deleteEvent(eventId);
+      showToast('success', 'Event deleted');
+    } catch (err) {
+      showToast('error', `Failed to delete event. ${err}`);
+    }
+  }
 
-        return events;
-    };
+  async createEvent(event) {
+    let newEvent;
 
-    async deleteEvent(eventId) {
-        try {
-            await this.service.deleteEvent(eventId);
-            showToast('success', 'Event deleted');
-        } catch (err) {
-            showToast('error', `Failed to delete event. ${err}`);
-        }
-    };
+    try {
+      newEvent = await this.service.createEvent(event);
+      showToast('success', 'Event created');
+    } catch (err) {
+      showToast('error', `Failed creating event. ${err}`);
+    }
 
-    async createEvent(event) {
-        let newEvent;
-
-        try {
-            newEvent = await this.service.createEvent(event);
-            showToast('success', 'Event created');
-        } catch (err) {
-            showToast('error', `Failed creating event. ${err}`);
-        }
-
-        return newEvent;
-    };
+    return newEvent;
+  }
 }
 
 export default new NotificationsDecorator(service);

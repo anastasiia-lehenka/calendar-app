@@ -44,7 +44,8 @@ const redirectToCalendar = () => {
   window.location.href = './calendar.html';
 };
 
-const addEvent = async (e) => {
+// eslint-disable-next-line import/prefer-default-export
+export const addEvent = async (e) => {
   e.preventDefault();
   hideAlert();
 

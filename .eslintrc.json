@@ -7,6 +7,7 @@
     "class-methods-use-this": "off"
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "jest": true
   }
 }

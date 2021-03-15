@@ -5,12 +5,15 @@
   "main": "calendar.js",
   "scripts": {
     "build": "webpack",
-    "start": "webpack serve"
+    "start": "webpack serve",
+    "test": "jest --watch"
   },
   "author": "Anastasiia Lehenka",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.13.10",
+    "@babel/plugin-transform-modules-commonjs": "^7.13.8",
+    "@babel/plugin-transform-runtime": "^7.13.10",
     "@babel/preset-env": "^7.13.10",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
@@ -22,6 +25,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "html-loader": "^2.0.0",
     "html-webpack-plugin": "^5.1.0",
+    "jest": "^26.6.3",
     "node-sass": "^5.0.0",
     "prettier": "^2.2.1",
     "sass-loader": "^11.0.1",
@@ -36,6 +40,7 @@
   "dependencies": {
     "bootstrap": "^4.6.0",
     "jquery": "^3.5.1",
+    "jsdom": "^16.5.1",
     "popper.js": "^1.16.1"
   }
 }

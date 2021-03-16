@@ -21,4 +21,8 @@ Authorization is implemented using Session Storage. So to logout you need to clo
 
 ###### Task 3
 
-Singleton pattern is used for interaction with backend (Service class). Factory Method is used for creating instances of User and Admin classes (UserFactory class). Decorator pattern is used for instance of Server class to show notifications which indicate the status of the server request (error/success) (NotificationsDecorator class). 
+Singleton pattern is used for interaction with backend (Service class). Factory Method is used for creating instances of User and Admin classes (UserFactory class). Decorator pattern is used for instance of Server class to show notifications which indicate the status of the server request (error/success) (NotificationsDecorator class).
+
+###### Task 4
+
+The app uses Webpack 5 which comes with the latest terser-webpack-plugin out of the box. That's why I didn't add any additional plugins to minify my javascript code. I just set optimization.minimize to true in webpack.config file to tell webpack to minimize the bundle using the TerserPlugin.
